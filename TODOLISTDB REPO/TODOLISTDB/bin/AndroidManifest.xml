@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.todolist"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.example.todolistdb.ToDoList_main"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name ="com.example.todolistdb.Detail_main"
+            android:label="@string/title_activity_detail" >
+        </activity>
+        <activity
+            android:name = "com.example.todolistdb.Setting_mainmain"
+            android:label="@string/title_activity_setting_main" >
+        </activity>
+        <activity
+            android:name="com.example.todolist.GetSetting_main"
+            android:label="@string/title_activity_get_setting_main" >
+        </activity>
+        <activity
+            android:name="com.example.todolist.MyPreferencesActivity"
+            android:label="@string/title_activity_my_preferences" >
+        </activity>
+    </application>
+
+</manifest>

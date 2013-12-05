@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory 
+        android:title="@string/einstellungen"
+        android:key="first_category">
+        
+       
+        <EditTextPreference
+            android:key="text_size"
+            android:title="@string/schriftgroesse" 
+            android:summary="@string/schriftgroessee_aendern"
+            android:dialogTitle="@string/schriftgroesse"
+            android:dialogMessage="@string/schriftgroessee_aendern_2"    
+            android:numeric="integer"
+            android:defaultValue="14.0" />
+
+    </PreferenceCategory>
+    
+</PreferenceScreen>

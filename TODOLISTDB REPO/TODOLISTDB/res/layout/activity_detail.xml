@@ -1,0 +1,94 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+<RelativeLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/textview_titel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/titel"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textview_beschreibung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText_titel"
+        android:layout_below="@+id/editText_titel"
+        android:layout_marginTop="15dp"
+        android:text="@string/beschreibung"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textview_prioritaet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textview_beschreibung"
+        android:layout_below="@+id/textview_beschreibung"
+        
+        
+        android:text="@string/prioritaet"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/editText_beschreibung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="4"
+    	android:lines="4"
+    	android:gravity="top"
+        android:layout_alignLeft="@+id/textview_beschreibung"
+        android:layout_below="@+id/textview_beschreibung"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <EditText
+        android:id="@+id/editText_titel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textview_titel"
+        android:layout_below="@+id/textview_titel"
+        android:inputType="text"
+        android:ems="10" >
+        
+        <requestFocus />
+     </EditText>
+
+    
+    <Spinner
+        android:id="@+id/spinner_priority"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textview_prioritaet"
+        android:layout_alignRight="@+id/textview_beschreibung"
+        android:layout_below="@+id/editText_beschreibung"
+        />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/spinner_priority"
+        android:layout_below="@+id/spinner_priority"
+    	
+        android:text="@string/save" />
+
+    <Button
+        android:id="@+id/button_delete"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/button_save"
+        android:layout_below="@+id/button_save"
+        
+        android:text="@string/delete" />
+
+</RelativeLayout>
+</ScrollView>
