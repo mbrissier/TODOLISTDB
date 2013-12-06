@@ -1,11 +1,13 @@
 package com.example.todolistdb;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,26 +25,26 @@ import android.view.*;
 
 public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 
-	public static final String DATA_TITEL = "titel";
+	public static final String DATA_TITEL 	= "titel";
 	public static final String DATA_COMMENT = "beschreibung";
 	public static final String DATA_SPINNER = "spinner";
-	public static final String DATA_DELETE = "delete";
+	public static final String DATA_DELETE 	= "delete";
+	public static final String LOG_TAG 		= "ToDoList_main";
 
 	// Wird beim start einer Subactivity mitgegeben, um Antworten interpretieren
 	// zu koennen
-	public static final int REQUEST_CODE_DETAIL_MAIN = 30;
-	public static final int ADD_REQUEST_CODE = 10;
+	public static final int REQUEST_CODE_DETAIL_MAIN 	= 30;
+	public static final int ADD_REQUEST_CODE 			= 10;
 	
 
-	// Hier werden die titel und beschreibungen gespeichert
-	ArrayList<String> values = new ArrayList<String>();
-	ArrayList<String> comment = new ArrayList<String>();
-	ArrayList<Integer> spinnerposition = new ArrayList<Integer>();
+	ArrayList<String> 	values 			= new ArrayList<String>();
+	ArrayList<String> 	comment 		= new ArrayList<String>();
+	ArrayList<Integer> 	spinnerposition = new ArrayList<Integer>();
 
 	// Um beim start der activity dem benutzer ein beispiel zu zeigen
-	String beispiel_titel = "Neuer Eintrag";
-	String beispiel_beschreibung = "";
-	int beispiel_spinner = 0;
+	String 	beispiel_titel 			= "Neuer Eintrag";
+	String 	beispiel_beschreibung 	= "";
+	int 	beispiel_spinner 		= 0;
 
 	// Speichern die positionen der titel-, beschreibungs- und spinnerwerte
 	int spinnerPosition;
@@ -107,7 +109,7 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 		alert = builder.create();
 		
 		
-
+		setUpDatabase();
 	}
 	
 	@Override
@@ -339,6 +341,56 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 
 	private void setUpDatabase()
 	{
-		
+		// get our dao
+		RuntimeExceptionDao<ToDo, Integer> toDoDao = getHelper().getToDoDao();
+		// query for all of the data objects in the database
+		List<ToDo> list = toDoDao.queryForAll();
+		// our string builder for building the content-view
+		StringBuilder sb = new StringBuilder();
+		sb.append("got ").append(list.size()).append(" entries in database").append("\n");
+
+		// if we already have items in the database
+		int toDoC = 0;
+		for (ToDo toDo : list)
+		{
+			sb.append("------------------------------------------\n");
+			sb.append("[").append(toDoC).append("] = ").append(toDo).append("\n");
+			toDoC++;
+		}
+		sb.append("------------------------------------------\n");
+		for (ToDo toDo : list)
+		{
+			toDoDao.delete(toDo);
+			sb.append("deleted id ").append(toDo.getId()).append("\n");
+			Log.i(LOG_TAG, "deleting toDo(" + toDo.getId() + ")");
+			toDoC++;
+		}
+
+		int createNum;
+		do
+		{
+			createNum = new Random().nextInt(3) + 1;
+		} while (createNum == list.size());
+		for (int i = 0; i < createNum; i++) {
+			// create a new simple object
+			long millis = System.currentTimeMillis();
+			ToDo toDo = new ToDo(millis, "test", 5);
+			// store it in the database
+			toDoDao.create(toDo);
+			Log.i(LOG_TAG, "created toDo");
+			// output it
+			sb.append("------------------------------------------\n");
+			sb.append("created new entry #").append(i + 1).append(":\n");
+			sb.append(toDo).append("\n");
+			try
+			{
+				Thread.sleep(5);
+			} catch (InterruptedException e)
+			{
+				// ignore
+			}
+		}
+		System.out.println(sb.toString());
+		Log.i(LOG_TAG, "Done with page at " + System.currentTimeMillis());
 	}
 }

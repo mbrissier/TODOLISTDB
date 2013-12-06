@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.todolistdb.exception.UserIQToLowException;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -34,7 +35,7 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 		} catch (SQLException e)
 		{
 			Log.e(MyHelper.class.getName(), "Can't create database", e);
-			throw new RuntimeException(e);
+			throw new UserIQToLowException(e.getMessage());
 		}
 
 		// here we try inserting data in the on-create as a test
@@ -58,7 +59,7 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 		} catch (SQLException e)
 		{
 			Log.e(MyHelper.class.getName(), "Can't drop databases", e);
-			throw new RuntimeException(e);
+			throw new UserIQToLowException(e.getMessage());
 		}
 	}
 	
