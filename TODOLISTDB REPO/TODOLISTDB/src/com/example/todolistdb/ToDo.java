@@ -14,8 +14,8 @@ public class ToDo
 	private String title;
 	@DatabaseField(canBeNull=true)
 	private String description;
-	@DatabaseField
-	private int priority_id;
+	@DatabaseField(foreign=true)
+	private Priority priority_id;
 	
 	public ToDo()
 	{
@@ -26,7 +26,6 @@ public class ToDo
 	{
 		setDate(date);
 		setTitle(title);
-		setPriority_id(priority_id);
 		setDescription(description);
 	}
 	
@@ -59,11 +58,11 @@ public class ToDo
 		this.description = description;
 	}
 
-	public int getPriority_id() {
+	public Priority getPriority_id() {
 		return priority_id;
 	}
 
-	public void setPriority_id(int priority_id) {
+	public void setPriority_id(Priority priority_id) {
 		this.priority_id = priority_id;
 	}
 
