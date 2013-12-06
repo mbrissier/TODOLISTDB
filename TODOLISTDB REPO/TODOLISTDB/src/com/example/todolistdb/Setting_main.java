@@ -2,6 +2,8 @@ package com.example.todolistdb;
 
 
 
+import com.example.todolist.R;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
