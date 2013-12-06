@@ -390,7 +390,19 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 				// ignore
 			}
 		}
+		RuntimeExceptionDao<Category, Integer> categoryDao = getHelper().getCategoryDao();
+		Category cat = new Category("Wichtig");
+		categoryDao.create(cat);
+		RuntimeExceptionDao<Priority, Integer> priorityDao = getHelper().getPriorityDao();
+		Priority prio = new Priority("hoch");
+		priorityDao.create(prio);
 		System.out.println(sb.toString());
+		List<Category> cats = categoryDao.queryForAll();
+		for(Category c : cats)
+			System.out.println(c);
+		List<Priority> prios = priorityDao.queryForAll();
+		for(Priority p : prios)
+			System.out.println(p);
 		Log.i(LOG_TAG, "Done with page at " + System.currentTimeMillis());
 	}
 }

@@ -18,8 +18,13 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 	private static final String DATABASE_NAME 		= "todo_database.db";
 	private static final int	DATABASE_VERSION 	= 1;
 	
-	private Dao<ToDo, Integer> 							toDoDao 			= null;
-	private RuntimeExceptionDao<ToDo, Integer> 			toDoRuntimeDao	 	= null;
+	
+	//dao's for every table
+	private Dao<ToDo, Integer> 							toDoDao 				= null;
+	private RuntimeExceptionDao<ToDo, Integer> 			toDoRuntimeDao	 		= null;
+	private RuntimeExceptionDao<ToDo_Category, Integer>	toDoCategoryRuntimeDao	= null;
+	private RuntimeExceptionDao<Category, Integer> 		categoryRuntimeDao		= null;
+	private RuntimeExceptionDao<Priority, Integer> 		priorityRuntimeDao 		= null;
 	
 	public MyHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -32,6 +37,9 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 		{
 			Log.i(MyHelper.class.getName(), "onCreate");
 			TableUtils.createTable(connectionSource, ToDo.class);
+			TableUtils.createTable(connectionSource, Category.class);
+			TableUtils.createTable(connectionSource, Priority.class);
+			TableUtils.createTable(connectionSource, ToDo_Category.class);
 		} catch (SQLException e)
 		{
 			Log.e(MyHelper.class.getName(), "Can't create database", e);
@@ -76,6 +84,30 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 			toDoRuntimeDao = getRuntimeExceptionDao(ToDo.class);
 		}
 		return toDoRuntimeDao;
+	}
+	
+	public RuntimeExceptionDao<ToDo_Category, Integer> getToDo_CategoryDao()
+	{
+		if (toDoCategoryRuntimeDao == null) {
+			toDoCategoryRuntimeDao = getRuntimeExceptionDao(ToDo_Category.class);
+		}
+		return toDoCategoryRuntimeDao;
+	}
+	
+	public RuntimeExceptionDao<Category, Integer> getCategoryDao()
+	{
+		if (categoryRuntimeDao == null) {
+			categoryRuntimeDao = getRuntimeExceptionDao(Category.class);
+		}
+		return categoryRuntimeDao;
+	}
+	
+	public RuntimeExceptionDao<Priority, Integer> getPriorityDao()
+	{
+		if (priorityRuntimeDao == null) {
+			priorityRuntimeDao = getRuntimeExceptionDao(Priority.class);
+		}
+		return priorityRuntimeDao;
 	}
 
 	@Override
