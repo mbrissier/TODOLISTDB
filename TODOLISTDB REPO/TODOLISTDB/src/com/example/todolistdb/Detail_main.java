@@ -3,7 +3,6 @@ package com.example.todolistdb;
 
 
 
-import com.example.todolist.R;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;

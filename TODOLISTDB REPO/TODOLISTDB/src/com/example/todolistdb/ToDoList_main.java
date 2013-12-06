@@ -2,8 +2,6 @@ package com.example.todolistdb;
 
 import java.util.ArrayList;
 
-import com.example.database.MyHelper;
-import com.example.todolist.R;
 import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
 
 import android.os.Bundle;
@@ -339,5 +337,8 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 		}
 	}
 
-	
+	private void setUpDatabase()
+	{
+		
+	}
 }

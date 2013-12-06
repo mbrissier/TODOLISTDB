@@ -1,22 +1,23 @@
-package com.example.database;
+package com.example.todolistdb;
+
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName="priority")
-public class Priority
+@DatabaseTable(tableName="category")
+public class Category
 {
 	@DatabaseField(generatedId=true)
 	private int id;
 	@DatabaseField
 	private String name;
-	
-	public Priority()
+
+	public Category()
 	{
 		
 	}
 	
-	public Priority(String name)
+	public Category(String name)
 	{
 		setName(name);
 	}
@@ -32,6 +33,4 @@ public class Priority
 	public int getId() {
 		return id;
 	}
-	
-	
 }

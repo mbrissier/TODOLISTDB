@@ -1,4 +1,4 @@
-package com.example.database;
+package com.example.todolistdb;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;

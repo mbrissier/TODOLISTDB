@@ -1,4 +1,4 @@
-package com.example.database;
+package com.example.todolistdb;
 
 import java.sql.SQLException;
 
@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.todolist.R;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -22,7 +21,7 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 	private RuntimeExceptionDao<ToDo, Integer> 			toDoRuntimeDao	 	= null;
 	
 	public MyHelper(Context context) {
-		super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);
+		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 	
 	@Override
