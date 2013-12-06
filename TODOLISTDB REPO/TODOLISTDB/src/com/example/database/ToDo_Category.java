@@ -11,6 +11,11 @@ public class ToDo_Category
 	@DatabaseField(foreign=true)
 	private int category_id;
 	
+	public ToDo_Category()
+	{
+		
+	}
+	
 	public ToDo_Category(int todo_id, int category_id)
 	{
 		setTodo_id(todo_id);

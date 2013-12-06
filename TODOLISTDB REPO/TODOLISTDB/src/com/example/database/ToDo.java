@@ -17,6 +17,11 @@ public class ToDo
 	@DatabaseField(foreign=true)
 	private int priority_id;
 	
+	public ToDo()
+	{
+		
+	}
+	
 	public ToDo(long date, String title, int priority_id, String description)
 	{
 		setDate(date);

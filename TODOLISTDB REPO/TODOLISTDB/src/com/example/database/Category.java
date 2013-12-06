@@ -12,6 +12,11 @@ public class Category
 	@DatabaseField
 	private String name;
 
+	public Category()
+	{
+		
+	}
+	
 	public Category(String name)
 	{
 		setName(name);

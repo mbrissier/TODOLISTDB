@@ -11,6 +11,11 @@ public class Priority
 	@DatabaseField
 	private String name;
 	
+	public Priority()
+	{
+		
+	}
+	
 	public Priority(String name)
 	{
 		setName(name);

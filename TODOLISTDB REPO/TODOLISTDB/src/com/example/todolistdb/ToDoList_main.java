@@ -2,7 +2,9 @@ package com.example.todolistdb;
 
 import java.util.ArrayList;
 
+import com.example.database.MyHelper;
 import com.example.todolist.R;
+import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -21,7 +23,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.view.*;
 
-public class ToDoList_main extends Activity {
+public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 
 	public static final String DATA_TITEL = "titel";
 	public static final String DATA_COMMENT = "beschreibung";
