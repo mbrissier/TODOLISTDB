@@ -1,18 +1,14 @@
 package com.example.todolistdb;
 
 
-
-
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.view.Menu;
-import android.view.MenuItem;
 
+@SuppressWarnings("deprecation")
 public class Setting_main extends PreferenceActivity {
 	
 	
