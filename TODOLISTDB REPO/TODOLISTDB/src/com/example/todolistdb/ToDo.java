@@ -15,7 +15,7 @@ public class ToDo
 	@DatabaseField(canBeNull=true)
 	private String description;
 	@DatabaseField(foreign=true)
-	private Priority priority_id;
+	private Priority priority;
 	
 	public ToDo()
 	{
@@ -27,11 +27,6 @@ public class ToDo
 		setDate(date);
 		setTitle(title);
 		setDescription(description);
-	}
-	
-	public ToDo(long date, String title)
-	{
-		this(date, title, null);
 	}
 
 	public long getDate() {
@@ -58,12 +53,12 @@ public class ToDo
 		this.description = description;
 	}
 
-	public Priority getPriority_id() {
-		return priority_id;
+	public Priority getPriority() {
+		return priority;
 	}
 
-	public void setPriority_id(Priority priority_id) {
-		this.priority_id = priority_id;
+	public void setPriority(Priority priority) {
+		this.priority = priority;
 	}
 
 	public int getId() {

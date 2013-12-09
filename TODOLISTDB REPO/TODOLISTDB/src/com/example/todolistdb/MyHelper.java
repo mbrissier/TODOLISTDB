@@ -50,7 +50,7 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 		RuntimeExceptionDao<ToDo, Integer> dao = getToDoDao();
 		long millis = System.currentTimeMillis();
 		// create an entry in the onCreate
-		ToDo toDo = new ToDo(millis, "test");
+		ToDo toDo = new ToDo(millis, "test", null);
 		dao.create(toDo);
 		Log.i(MyHelper.class.getName(), "created new entries in onCreate: " + millis);
 	}
@@ -110,6 +110,35 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 		return priorityRuntimeDao;
 	}
 
+	public void createToDo(String title, String description, Priority prio, long date)
+	{
+		RuntimeExceptionDao<ToDo, Integer> dao 	= getToDoDao();
+		ToDo toDo 								= new ToDo(date, title, description);
+		toDo.setPriority(prio);
+		dao.create(toDo);
+	}
+	
+	public void createPriority(String name)
+	{
+		RuntimeExceptionDao<Priority, Integer> dao 	= getPriorityDao();
+		Priority prio 								= new Priority(name);
+		dao.create(prio);
+	}
+	
+	public void createCategory(String name)
+	{
+		RuntimeExceptionDao<Category, Integer> dao 	= getCategoryDao();
+		Category cat 								= new Category(name);
+		dao.create(cat);
+	}
+	
+	public void createToDo_Category(ToDo toDo, Category cat)
+	{
+		RuntimeExceptionDao<ToDo_Category, Integer> dao 	= getToDo_CategoryDao();
+		ToDo_Category tdc 									= new ToDo_Category(toDo, cat);
+		dao.create(tdc);
+	}
+	
 	@Override
 	public void close()
 	{

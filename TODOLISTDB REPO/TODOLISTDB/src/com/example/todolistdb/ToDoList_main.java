@@ -341,6 +341,18 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 
 	private void setUpDatabase()
 	{
+		//get all categories
+		RuntimeExceptionDao<Category, Integer> catDao = getHelper().getCategoryDao();
+		List<Category> catList = catDao.queryForAll();
+		for(Category c : catList)
+			System.out.println(c.getName());
+		
+		//get all priorities
+		RuntimeExceptionDao<Priority, Integer> prioDao = getHelper().getPriorityDao();
+		List<Priority> prioList = prioDao.queryForAll();
+		for(Priority p : prioList)
+			System.out.println(p.getName());
+		
 		// get our dao
 		RuntimeExceptionDao<ToDo, Integer> toDoDao = getHelper().getToDoDao();
 		// query for all of the data objects in the database
@@ -374,7 +386,7 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 		for (int i = 0; i < createNum; i++) {
 			// create a new simple object
 			long millis = System.currentTimeMillis();
-			ToDo toDo = new ToDo(millis, "test");
+			ToDo toDo = new ToDo(millis, "test", null);
 			// store it in the database
 			toDoDao.create(toDo);
 			Log.i(LOG_TAG, "created toDo");
