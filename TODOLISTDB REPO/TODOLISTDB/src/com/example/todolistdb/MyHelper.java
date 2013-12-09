@@ -50,7 +50,7 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 		RuntimeExceptionDao<ToDo, Integer> dao = getToDoDao();
 		long millis = System.currentTimeMillis();
 		// create an entry in the onCreate
-		ToDo toDo = new ToDo(millis, "test", 2);
+		ToDo toDo = new ToDo(millis, "test");
 		dao.create(toDo);
 		Log.i(MyHelper.class.getName(), "created new entries in onCreate: " + millis);
 	}

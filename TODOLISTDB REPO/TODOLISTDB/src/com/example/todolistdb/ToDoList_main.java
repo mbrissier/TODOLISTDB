@@ -374,7 +374,7 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 		for (int i = 0; i < createNum; i++) {
 			// create a new simple object
 			long millis = System.currentTimeMillis();
-			ToDo toDo = new ToDo(millis, "test", 5);
+			ToDo toDo = new ToDo(millis, "test");
 			// store it in the database
 			toDoDao.create(toDo);
 			Log.i(LOG_TAG, "created toDo");
@@ -405,4 +405,6 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 			System.out.println(p);
 		Log.i(LOG_TAG, "Done with page at " + System.currentTimeMillis());
 	}
+	
+	
 }

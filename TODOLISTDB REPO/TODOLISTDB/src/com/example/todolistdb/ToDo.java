@@ -22,16 +22,16 @@ public class ToDo
 		
 	}
 	
-	public ToDo(long date, String title, int priority_id, String description)
+	public ToDo(long date, String title, String description)
 	{
 		setDate(date);
 		setTitle(title);
 		setDescription(description);
 	}
 	
-	public ToDo(long date, String title, int priority_id)
+	public ToDo(long date, String title)
 	{
-		this(date, title, priority_id, null);
+		this(date, title, null);
 	}
 
 	public long getDate() {
