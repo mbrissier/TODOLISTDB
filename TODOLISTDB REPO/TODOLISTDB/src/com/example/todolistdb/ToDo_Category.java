@@ -6,9 +6,9 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable (tableName="todo_category")
 public class ToDo_Category
 {
-	@DatabaseField(foreign=true)
+	@DatabaseField(uniqueCombo=true, foreign=true)
 	private ToDo todo_id;
-	@DatabaseField(foreign=true)
+	@DatabaseField(uniqueCombo=true, foreign=true)
 	private Category category_id;
 	
 	public ToDo_Category()

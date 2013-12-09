@@ -1,6 +1,7 @@
 package com.example.todolistdb;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -80,63 +81,91 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 	
 	public RuntimeExceptionDao<ToDo, Integer> getToDoDao()
 	{
-		if (toDoRuntimeDao == null) {
+		if (toDoRuntimeDao == null)
 			toDoRuntimeDao = getRuntimeExceptionDao(ToDo.class);
-		}
 		return toDoRuntimeDao;
 	}
 	
 	public RuntimeExceptionDao<ToDo_Category, Integer> getToDo_CategoryDao()
 	{
-		if (toDoCategoryRuntimeDao == null) {
+		if (toDoCategoryRuntimeDao == null)
 			toDoCategoryRuntimeDao = getRuntimeExceptionDao(ToDo_Category.class);
-		}
 		return toDoCategoryRuntimeDao;
 	}
 	
 	public RuntimeExceptionDao<Category, Integer> getCategoryDao()
 	{
-		if (categoryRuntimeDao == null) {
+		if (categoryRuntimeDao == null)
 			categoryRuntimeDao = getRuntimeExceptionDao(Category.class);
-		}
 		return categoryRuntimeDao;
 	}
 	
 	public RuntimeExceptionDao<Priority, Integer> getPriorityDao()
 	{
-		if (priorityRuntimeDao == null) {
+		if (priorityRuntimeDao == null)
 			priorityRuntimeDao = getRuntimeExceptionDao(Priority.class);
-		}
 		return priorityRuntimeDao;
 	}
 
 	public void createToDo(String title, String description, Priority prio, long date)
 	{
-		RuntimeExceptionDao<ToDo, Integer> dao 	= getToDoDao();
-		ToDo toDo 								= new ToDo(date, title, description);
+		if(toDoRuntimeDao == null)
+			getToDoDao();
+		ToDo toDo = new ToDo(date, title, description);
 		toDo.setPriority(prio);
-		dao.create(toDo);
+		toDoRuntimeDao.create(toDo);
 	}
 	
 	public void createPriority(String name)
 	{
-		RuntimeExceptionDao<Priority, Integer> dao 	= getPriorityDao();
-		Priority prio 								= new Priority(name);
-		dao.create(prio);
+		if(priorityRuntimeDao == null)
+			getPriorityDao();
+		Priority prio = new Priority(name);
+		priorityRuntimeDao.create(prio);
 	}
 	
 	public void createCategory(String name)
 	{
-		RuntimeExceptionDao<Category, Integer> dao 	= getCategoryDao();
-		Category cat 								= new Category(name);
-		dao.create(cat);
+		if(categoryRuntimeDao == null)
+			getCategoryDao();
+		Category cat = new Category(name);
+		categoryRuntimeDao.create(cat);
 	}
 	
 	public void createToDo_Category(ToDo toDo, Category cat)
 	{
-		RuntimeExceptionDao<ToDo_Category, Integer> dao 	= getToDo_CategoryDao();
-		ToDo_Category tdc 									= new ToDo_Category(toDo, cat);
-		dao.create(tdc);
+		if(toDoCategoryRuntimeDao == null)
+			getToDo_CategoryDao();
+		ToDo_Category tdc = new ToDo_Category(toDo, cat);
+		toDoCategoryRuntimeDao.create(tdc);
+	}
+	
+	public List<Category> getAllCategories()
+	{
+		if(categoryRuntimeDao == null)
+			getCategoryDao();
+		return categoryRuntimeDao.queryForAll();
+	}
+	
+	public List<Priority> getAllPriorities()
+	{
+		if(priorityRuntimeDao == null)
+			getPriorityDao();
+		return priorityRuntimeDao.queryForAll();
+	}
+	
+	public List<ToDo_Category> getAllToDo_Categories()
+	{
+		if(toDoCategoryRuntimeDao == null)
+			getToDo_CategoryDao();
+		return toDoCategoryRuntimeDao.queryForAll();
+	}
+	
+	public List<ToDo> getAllToDos()
+	{
+		if(toDoRuntimeDao == null)
+			getToDoDao();
+		return toDoRuntimeDao.queryForAll();
 	}
 	
 	@Override

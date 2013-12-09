@@ -14,9 +14,9 @@ public class ToDo
 	private String title;
 	@DatabaseField(canBeNull=true)
 	private String description;
-	@DatabaseField(foreign=true)
+	@DatabaseField(foreign=true, canBeNull=true)
 	private Priority priority;
-	
+
 	public ToDo()
 	{
 		

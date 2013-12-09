@@ -341,81 +341,45 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 
 	private void setUpDatabase()
 	{
-		//get all categories
+		//get our dao's
 		RuntimeExceptionDao<Category, Integer> catDao = getHelper().getCategoryDao();
-		List<Category> catList = catDao.queryForAll();
-		for(Category c : catList)
-			System.out.println(c.getName());
+		RuntimeExceptionDao<Priority, Integer> prioDao = getHelper().getPriorityDao();
+		RuntimeExceptionDao<ToDo, Integer> toDoDao = getHelper().getToDoDao();
+		RuntimeExceptionDao<ToDo_Category, Integer> tdcDao = getHelper().getToDo_CategoryDao();
+		for (int i = 0; i < 5; i++)
+		{
+			ToDo toDo 			= new ToDo(1000, "test", null);
+			Priority prio 		= new Priority("testprio");
+			prioDao.create(prio);
+			toDo.setPriority(prio);
+			Category cat 		= new Category("testcat");
+			ToDo_Category tdc 	= new ToDo_Category(toDo, cat);
+			toDoDao.create(toDo);
+			catDao.create(cat);
+			tdcDao.create(tdc);
+			Log.i(LOG_TAG, "created toDo");
+		}
 		
 		//get all priorities
-		RuntimeExceptionDao<Priority, Integer> prioDao = getHelper().getPriorityDao();
 		List<Priority> prioList = prioDao.queryForAll();
 		for(Priority p : prioList)
 			System.out.println(p.getName());
 		
-		// get our dao
-		RuntimeExceptionDao<ToDo, Integer> toDoDao = getHelper().getToDoDao();
-		// query for all of the data objects in the database
+		//get all categories
+		List<Category> catList = catDao.queryForAll();
+		for(Category c : catList)
+			System.out.println(c.getName());
+		
+		//get all todo-category-pairs
+		List<ToDo_Category> tdcList = tdcDao.queryForAll();
+		for(ToDo_Category t : tdcList)
+			System.out.println(t.getTodo_id() + " " + t.getCategory_id());
+		
+		// query for all todo's
 		List<ToDo> list = toDoDao.queryForAll();
-		// our string builder for building the content-view
-		StringBuilder sb = new StringBuilder();
-		sb.append("got ").append(list.size()).append(" entries in database").append("\n");
-
-		// if we already have items in the database
-		int toDoC = 0;
-		for (ToDo toDo : list)
-		{
-			sb.append("------------------------------------------\n");
-			sb.append("[").append(toDoC).append("] = ").append(toDo).append("\n");
-			toDoC++;
-		}
-		sb.append("------------------------------------------\n");
-		for (ToDo toDo : list)
-		{
-			toDoDao.delete(toDo);
-			sb.append("deleted id ").append(toDo.getId()).append("\n");
-			Log.i(LOG_TAG, "deleting toDo(" + toDo.getId() + ")");
-			toDoC++;
-		}
-
-		int createNum;
-		do
-		{
-			createNum = new Random().nextInt(3) + 1;
-		} while (createNum == list.size());
-		for (int i = 0; i < createNum; i++) {
-			// create a new simple object
-			long millis = System.currentTimeMillis();
-			ToDo toDo = new ToDo(millis, "test", null);
-			// store it in the database
-			toDoDao.create(toDo);
-			Log.i(LOG_TAG, "created toDo");
-			// output it
-			sb.append("------------------------------------------\n");
-			sb.append("created new entry #").append(i + 1).append(":\n");
-			sb.append(toDo).append("\n");
-			try
-			{
-				Thread.sleep(5);
-			} catch (InterruptedException e)
-			{
-				// ignore
-			}
-		}
-		RuntimeExceptionDao<Category, Integer> categoryDao = getHelper().getCategoryDao();
-		Category cat = new Category("Wichtig");
-		categoryDao.create(cat);
-		RuntimeExceptionDao<Priority, Integer> priorityDao = getHelper().getPriorityDao();
-		Priority prio = new Priority("hoch");
-		priorityDao.create(prio);
-		System.out.println(sb.toString());
-		List<Category> cats = categoryDao.queryForAll();
-		for(Category c : cats)
-			System.out.println(c);
-		List<Priority> prios = priorityDao.queryForAll();
-		for(Priority p : prios)
-			System.out.println(p);
-		Log.i(LOG_TAG, "Done with page at " + System.currentTimeMillis());
+		for(ToDo t : list)
+			System.out.println(t.getId() + "; " + t.getTitle() + "; " + t.getPriority().getName());
+		
 	}
 	
 	
