@@ -16,7 +16,7 @@ public class ToDo
 	private String title;
 	@DatabaseField(canBeNull=true)
 	private String description;
-	@DatabaseField(foreign=true, canBeNull=true)
+	@DatabaseField(foreign=true)
 	private Priority priority;
 	
 	private List<Category> categories;

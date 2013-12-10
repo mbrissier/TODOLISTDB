@@ -19,6 +19,7 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 {
 	private static final String DATABASE_NAME 		= "todo_database.db";
 	private static final int	DATABASE_VERSION 	= 1;
+	private static final String DATABASE_ACTION_TAG = "Databaseaction";
 	
 	
 	//dao's for every table
@@ -47,14 +48,6 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 			Log.e(MyHelper.class.getName(), "Can't create database", e);
 			throw new UserIQToLowException(e.getMessage());
 		}
-
-		// here we try inserting data in the on-create as a test
-		RuntimeExceptionDao<ToDo, Integer> dao = getToDoDao();
-		long millis = System.currentTimeMillis();
-		// create an entry in the onCreate
-		ToDo toDo = new ToDo(millis, "test", null);
-		dao.create(toDo);
-		Log.i(MyHelper.class.getName(), "created new entries in onCreate: " + millis);
 	}
 	
 	@Override
@@ -115,6 +108,7 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 		ToDo toDo = new ToDo(date, title, description);
 		toDo.setPriority(prio);
 		toDoRuntimeDao.create(toDo);
+		Log.v(DATABASE_ACTION_TAG, "created ToDo: " + toDo.toString());
 	}
 	
 	public void createPriority(String name)
@@ -123,6 +117,7 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 			getPriorityDao();
 		Priority prio = new Priority(name);
 		priorityRuntimeDao.create(prio);
+		Log.v(DATABASE_ACTION_TAG, "created Priority id: " + prio.getId() + " name: " + prio.getName());
 	}
 	
 	public void createCategory(String name)
@@ -131,6 +126,7 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 			getCategoryDao();
 		Category cat = new Category(name);
 		categoryRuntimeDao.create(cat);
+		Log.v(DATABASE_ACTION_TAG, "created Category id: " + cat.getId() + " name: " + cat.getName());
 	}
 	
 	public void createToDo_Category(ToDo toDo, Category cat)
@@ -139,6 +135,7 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 			getToDo_CategoryDao();
 		ToDo_Category tdc = new ToDo_Category(toDo, cat);
 		toDoCategoryRuntimeDao.create(tdc);
+		Log.v(DATABASE_ACTION_TAG, "created ToDo_Category todo_id: " + tdc.getTodo_id() + " category_id: " + tdc.getCategory_id());
 	}
 	
 	public List<Category> getAllCategories()
@@ -181,11 +178,14 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 				tdQb.where().eq("id", t.getId());
 				QueryBuilder<Priority, Integer> pQb = priorityRuntimeDao.queryBuilder();
 				QueryBuilder<ToDo_Category, Integer> tdcQb = toDoCategoryRuntimeDao.queryBuilder();
-				//tdcQb.where().eq("todo_id", t.getId());
 				tdcQb.join(tdQb);
 				QueryBuilder<Category, Integer> catQb = categoryRuntimeDao.queryBuilder();
 				t.setCategories(catQb.join(tdcQb).query());
-				//t.setPriority(pQb.join(tdQb).query().get(0));
+				tdQb = toDoRuntimeDao.queryBuilder();
+				pQb.where().eq("id", t.getPriority().getId());
+				List<Priority> prios = pQb.join(tdQb).query();
+				if(!prios.isEmpty())
+					t.setPriority(prios.get(0));
 			} catch (SQLException e)
 			{
 				e.printStackTrace();
