@@ -122,32 +122,7 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
         outState.putIntegerArrayList("spinner", spinnerposition);
     }
 
-	// /**
-	// * laden der text size und uebergabe an listitem
-	// */
-	// private void loadSavedPreferences() {
-	// SharedPreferences sharedPreferences =
-	// PreferenceManager.getDefaultSharedPreferences(this);
-	//
-	// try {
-	// String val1= sharedPreferences.getString("text_size", "");
-	// Toast.makeText(ToDoList_main.this,"Val:"+ val1
-	// ,Toast.LENGTH_LONG).show();
-	//
-	// float val = Float.parseFloat(sharedPreferences.getString("text_size",
-	// ""));
-	//
-	// arrayAdaptersize = new MadaArrayAdapter<String> (ToDoList_main.this);
-	// arrayAdaptersize.setTextSize(val, arrayAdaptersize.getTextSizeUnit());
-	// todoListView.setAdapter(arrayAdaptersize);
-	// todoListView.setOnItemClickListener(todoListViewListener);
-	//
-	//
-	// } catch (NumberFormatException e) {
-	// Log.wtf("Miss Cast ", "String to Float");
-	// }
-	//
-	// }
+
 	
 	/**
 	 * delete methode wird mit dialog ausgefuehrt, wenn lange auf ein item geklickt wird
@@ -341,46 +316,24 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 
 	private void setUpDatabase()
 	{
-		//get our dao's
-		RuntimeExceptionDao<Category, Integer> catDao = getHelper().getCategoryDao();
-		RuntimeExceptionDao<Priority, Integer> prioDao = getHelper().getPriorityDao();
-		RuntimeExceptionDao<ToDo, Integer> toDoDao = getHelper().getToDoDao();
-		RuntimeExceptionDao<ToDo_Category, Integer> tdcDao = getHelper().getToDo_CategoryDao();
-		for (int i = 0; i < 5; i++)
-		{
-			ToDo toDo 			= new ToDo(1000, "test", null);
-			Priority prio 		= new Priority("testprio");
-			prioDao.create(prio);
-			toDo.setPriority(prio);
-			Category cat 		= new Category("testcat");
-			ToDo_Category tdc 	= new ToDo_Category(toDo, cat);
-			toDoDao.create(toDo);
-			catDao.create(cat);
-			tdcDao.create(tdc);
-			Log.i(LOG_TAG, "created toDo");
-		}
-		
-		//get all priorities
-		List<Priority> prioList = prioDao.queryForAll();
-		for(Priority p : prioList)
-			System.out.println(p.getName());
-		
-		//get all categories
-		List<Category> catList = catDao.queryForAll();
-		for(Category c : catList)
-			System.out.println(c.getName());
-		
-		//get all todo-category-pairs
-		List<ToDo_Category> tdcList = tdcDao.queryForAll();
-		for(ToDo_Category t : tdcList)
-			System.out.println(t.getTodo_id() + " " + t.getCategory_id());
-		
-		// query for all todo's
-		List<ToDo> list = toDoDao.queryForAll();
-		for(ToDo t : list)
-			System.out.println(t.getId() + "; " + t.getTitle() + "; " + t.getPriority().getName());
-		
+		getHelper().createCategory("A");
+		getHelper().createCategory("B");
+		getHelper().createCategory("C");
+		List<Category> cats = getHelper().getAllCategories();
+		getHelper().createPriority("high");
+		getHelper().createPriority("medium");
+		getHelper().createPriority("low");
+		List<Priority> prios = getHelper().getAllPriorities();
+		getHelper().createToDo("Arzt", "Zahnarzt", prios.get(2), 10000);
+		getHelper().createToDo("Snakes", "California Mountainsnakes", prios.get(0), 20000);
+		getHelper().createToDo("Uni", "Vorlesung", prios.get(1), 30000);
+		List<ToDo> todos = getHelper().getAllToDos();
+		getHelper().createToDo_Category(todos.get(0), cats.get(0));
+		getHelper().createToDo_Category(todos.get(1), cats.get(0));
+		getHelper().createToDo_Category(todos.get(1), cats.get(1));
+		getHelper().createToDo_Category(todos.get(1), cats.get(2));
+		getHelper().createToDo_Category(todos.get(2), cats.get(2));
+		todos = getHelper().getAllToDos();
+		System.out.println(todos);
 	}
-	
-	
 }

@@ -80,13 +80,19 @@ public class ToDo
 	
 	public String toString()
 	{
-		return 	"------------------------------------\n" +
-				"title: " + title + "\n" +
-				"description: " + description + "\n" +
-				"priority: " + priority.toString() + "\n" +
-				"date: " + date + "\n" +
-				"categories: " + categories + "\n" +
-				"------------------------------------\n";
+		StringBuilder sb = new StringBuilder("------------------------------------\n" +
+											"title: " + title + "\n" +
+											"description: " + description + "\n" +
+											"date: " + date + "\n");
+		if(categories != null)
+			sb.append("categories: " + categories + "\n");
+		else
+			sb.append("categories: " + "-" + "\n");
+		if(priority != null)
+			sb.append("priority: " + priority + "\n");
+		else
+			sb.append("priority: " + "-" + "\n");
+		return 	sb.append("------------------------------------\n").toString();
 	}
 	
 }

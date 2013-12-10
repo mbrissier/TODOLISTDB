@@ -170,15 +170,22 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 			getToDo_CategoryDao();
 		if(categoryRuntimeDao == null)
 			getCategoryDao();
+		if(priorityRuntimeDao == null)
+			getPriorityDao();
 		List<ToDo> todos = toDoRuntimeDao.queryForAll();
 		for(ToDo t : todos)
 		{
 			try
 			{
+				QueryBuilder<ToDo, Integer> tdQb = toDoRuntimeDao.queryBuilder();
+				tdQb.where().eq("id", t.getId());
+				QueryBuilder<Priority, Integer> pQb = priorityRuntimeDao.queryBuilder();
 				QueryBuilder<ToDo_Category, Integer> tdcQb = toDoCategoryRuntimeDao.queryBuilder();
-				tdcQb.where().eq("todo_id", t.getId());
+				//tdcQb.where().eq("todo_id", t.getId());
+				tdcQb.join(tdQb);
 				QueryBuilder<Category, Integer> catQb = categoryRuntimeDao.queryBuilder();
 				t.setCategories(catQb.join(tdcQb).query());
+				//t.setPriority(pQb.join(tdQb).query().get(0));
 			} catch (SQLException e)
 			{
 				e.printStackTrace();
