@@ -78,4 +78,15 @@ public class ToDo
 		return id;
 	}
 	
+	public String toString()
+	{
+		return 	"------------------------------------\n" +
+				"title: " + title + "\n" +
+				"description: " + description + "\n" +
+				"priority: " + priority.toString() + "\n" +
+				"date: " + date + "\n" +
+				"categories: " + categories + "\n" +
+				"------------------------------------\n";
+	}
+	
 }

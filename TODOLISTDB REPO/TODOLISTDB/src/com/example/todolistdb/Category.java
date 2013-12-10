@@ -33,4 +33,9 @@ public class Category
 	public int getId() {
 		return id;
 	}
+	
+	public String toString()
+	{
+		return name;
+	}
 }
