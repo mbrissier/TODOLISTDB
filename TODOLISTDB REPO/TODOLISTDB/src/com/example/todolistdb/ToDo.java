@@ -1,5 +1,7 @@
 package com.example.todolistdb;
 
+import java.util.List;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -16,6 +18,17 @@ public class ToDo
 	private String description;
 	@DatabaseField(foreign=true, canBeNull=true)
 	private Priority priority;
+	
+	private List<Category> categories;
+
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
 
 	public ToDo()
 	{

@@ -11,6 +11,7 @@ import com.example.todolistdb.exception.UserIQToLowException;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
@@ -165,7 +166,25 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 	{
 		if(toDoRuntimeDao == null)
 			getToDoDao();
-		return toDoRuntimeDao.queryForAll();
+		if(toDoCategoryRuntimeDao == null)
+			getToDo_CategoryDao();
+		if(categoryRuntimeDao == null)
+			getCategoryDao();
+		List<ToDo> todos = toDoRuntimeDao.queryForAll();
+		for(ToDo t : todos)
+		{
+			try
+			{
+				QueryBuilder<ToDo_Category, Integer> tdcQb = toDoCategoryRuntimeDao.queryBuilder();
+				tdcQb.where().eq("todo_id", t.getId());
+				QueryBuilder<Category, Integer> catQb = categoryRuntimeDao.queryBuilder();
+				t.setCategories(catQb.join(tdcQb).query());
+			} catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return todos;
 	}
 	
 	@Override
