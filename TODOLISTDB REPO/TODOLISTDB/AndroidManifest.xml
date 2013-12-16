@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name ="com.example.todolistdb.Detail_main"
+            android:name="com.example.todolistdb.Detail_main"
             android:label="@string/title_activity_detail" >
         </activity>
         <activity
-            android:name = "com.example.todolistdb.Setting_mainmain"
+            android:name="com.example.todolistdb.Setting_mainmain"
             android:label="@string/title_activity_setting_main" >
         </activity>
         <activity
@@ -37,6 +37,14 @@
         <activity
             android:name="com.example.todolist.MyPreferencesActivity"
             android:label="@string/title_activity_my_preferences" >
+        </activity>
+        <activity
+            android:name="com.example.todolistdb.CategoryManager"
+            android:label="@string/title_activity_category_manage" >
+        </activity>
+        <activity
+            android:name="com.example.todolistdb.PriorityManager"
+            android:label="@string/title_activity_priority_manager" >
         </activity>
     </application>
 

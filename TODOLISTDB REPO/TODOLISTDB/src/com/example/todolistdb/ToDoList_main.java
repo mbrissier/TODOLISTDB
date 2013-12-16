@@ -85,7 +85,7 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 
 		todoListView.setOnItemLongClickListener(todoListViewLongListener);
 
-		// die Beispiele werden hinzugefuegt
+		
 		
 
 		// loadSavedPreferences();
@@ -109,7 +109,7 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 		alert = builder.create();
 		
 		
-		setUpDatabase();
+		//setUpDatabase();
 	}
 	
 	@Override
@@ -219,6 +219,17 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 			// Schriftgroesse
 			startSettingsActivity();
 
+			return true;
+			
+		case R.id.manageCategories:
+			Intent intentC = new Intent(this, CategoryManager.class);
+			startActivity(intentC);
+			return true;
+			
+			
+		case R.id.managePriorities:
+			Intent intentP = new Intent(this, PriorityManager.class);
+			startActivity(intentP);
 			return true;
 
 		default:

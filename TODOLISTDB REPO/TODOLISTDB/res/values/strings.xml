@@ -17,6 +17,15 @@
     <string name="delete_last">Letztes Element löschen</string>
     <string name="schriftgroessee_aendern">Schriftgröße ändern</string>
     <string name="schriftgroessee_aendern_2">Schriftgröße ändern:</string>
+    <string name="manageCategories">Kategorien verwalten</string>
+    <string name="managePriorities">Prioritäten verwalten</string>
+    <string name="categories">Kategorien</string>
+    <string name="addCategories">Kategorie hinzufügen</string>
+    <string name="category">Kategorie</string>
+    <string name="addCategory">Hinzufügen</string>
+    <string name="addPriorities">Hinzufügen</string>
+    <string name="priorities">Prioritäten</string>
+    <string name="priority">Priorität</string>
     
     
 
@@ -30,5 +39,7 @@
     <string name="title_activity_get_setting_main">GetSetting_main</string>
     <string name="title_activity_my_preferences">MyPreferencesActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_category_manage">CategoryManage</string>
+    <string name="title_activity_priority_manager">PriorityManager</string>
 
 </resources>
