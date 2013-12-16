@@ -4,12 +4,20 @@ package com.example.todolistdb;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
+
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -19,9 +27,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
-public class Detail_main extends Activity implements OnItemSelectedListener {
+public class Detail_main extends OrmLiteBaseActivity<MyHelper> implements OnItemSelectedListener {
 
 	// RESULT wird den Daten mitgegeben, damit ToDoList_main die Daten
 	// identifizieren kann.
@@ -30,11 +39,12 @@ public class Detail_main extends Activity implements OnItemSelectedListener {
 	public static final String RESULT_KEY_EDIT_BESCHREIBUNG = "edit_beschreibung";
 	public static final String RESULT_KEY_DELETE = "delete_flag";
 
-	private Spinner prioritySpinner;
-	private EditText titel;
-	private EditText beschreibung;
-	private Button deleteButton;
-	private Button saveButton;
+	private Spinner 			prioritySpinner;
+	private EditText 			titel;
+	private EditText 			beschreibung;
+	private Button 				deleteButton;
+	private Button 				saveButton;
+	private	ArrayList<String>	priorities = new ArrayList<String>();
 
 	// Die Auswahlmoeglichkeiten, definiert in strings.xml, im Spinner werden in
 	// priority gespeichert
@@ -46,11 +56,13 @@ public class Detail_main extends Activity implements OnItemSelectedListener {
 		setContentView(R.layout.activity_detail);
 
 		// Spinner
+		List<Priority> priorityList = getHelper().getAllPriorities();
+		
+		for(Priority p : priorityList)
+			priorities.add(p.getName());
 		prioritySpinner = (Spinner) findViewById(R.id.spinner_priority);
 		// Spinner adapter
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-				this, R.array.array_priority,
-				android.R.layout.simple_spinner_item);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, priorities);
 
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		prioritySpinner.setAdapter(adapter);
@@ -75,18 +87,54 @@ public class Detail_main extends Activity implements OnItemSelectedListener {
 		Bundle b = intent.getExtras();
 
 		if (b != null) {
-			String c = (String) b.get("beschreibung");
-			String s = (String) b.get("titel");
-			int a = b.getInt("spinner");
+			
+			
+			ToDo todo = (ToDo) b.get("ToDo");
+//			String c = (String) b.get("beschreibung");
+//			String s = (String) b.get("titel");
+//			int a = b.getInt("spinner");
 
-			titel.setText(s);
-			beschreibung.setText(c);
-			prioritySpinner.setSelection(a);
+			titel.setText(todo.getTitle());
+			beschreibung.setText(todo.getDescription());
+			ArrayAdapter<String> adap = (ArrayAdapter<String>) prioritySpinner.getAdapter();
+			int index = -1;
+			for(int i = 0; i < adap.getCount(); i++)
+				if(adap.getItem(i).equals(todo.getPriority().getName()))
+					index = i;
+			if(index != -1)
+				prioritySpinner.setSelection(index);
 
 		}
 
 		loadSavedPreferences();
 
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.detail, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+
+		case R.id.addToDoCategory:
+
+			Intent intent = new Intent(this, ToDo_Category_Manager.class);
+			startActivity(intent);
+			
+
+			return true;
+
+		default:
+
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	/**
@@ -159,6 +207,7 @@ public class Detail_main extends Activity implements OnItemSelectedListener {
 						.getText().toString());
 				data.putExtra("spinner",
 						prioritySpinner.getSelectedItemPosition());
+
 				setResult(RESULT_OK, data);
 				finish();
 			}

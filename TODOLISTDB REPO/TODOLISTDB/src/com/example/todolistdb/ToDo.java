@@ -1,13 +1,18 @@
 package com.example.todolistdb;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName="todo")
-public class ToDo
+public class ToDo implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 90311570164858987L;
 	@DatabaseField(generatedId=true)
 	private int id;
 	@DatabaseField

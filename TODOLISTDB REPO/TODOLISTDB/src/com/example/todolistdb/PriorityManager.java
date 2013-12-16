@@ -1,5 +1,8 @@
 package com.example.todolistdb;
 import java.util.ArrayList;
+import java.util.List;
+
+import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
 
 
 
@@ -22,12 +25,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 
-public class PriorityManager extends Activity {
+public class PriorityManager extends OrmLiteBaseActivity<MyHelper> {
  
 	ListView priorityList;
 	ArrayList<String> priorityArray = new ArrayList<String>();
 	
 	private ArrayAdapter<String> arrayAdapter;
+	
+	private List<Priority> priorities;
 
 	
 
@@ -44,10 +49,21 @@ public class PriorityManager extends Activity {
   priorityList.setOnItemLongClickListener(priorityListLongListener);
   createListView();
   
-  
+  priorities = getHelper().getAllPriorities();
+  for(Priority p : priorities)
+	  priorityArray.add(p.getName());
   
 
  }
+ 
+ 
+ @Override
+protected void onResume() {
+	 createListView();
+	super.onResume();
+}
+ 
+ 
  
  public void createListView() {
 	 
@@ -68,7 +84,9 @@ public class PriorityManager extends Activity {
 		public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos,
 				long id) {
 
+			getHelper().deletePriority(priorityArray.get(pos));
 			priorityArray.remove(pos);
+			
 			createListView();
 
 			return true;
@@ -117,10 +135,15 @@ public class PriorityManager extends Activity {
 			editalert.setPositiveButton(getResources().getString(R.string.addPriorities), new DialogInterface.OnClickListener() {
 			    public void onClick(DialogInterface dialog, int whichButton) {
 			    	
-			    	if(!input.getText().toString().equals(""))
-			    	priorityArray.add(input.getText().toString());
-			    	createListView();
+			    	if(!input.getText().toString().equals("")) {
+			    	getHelper().createPriority(input.getText().toString());
+		    		priorityArray.add(input.getText().toString());
+			    	}
+			    	 createListView();
 			    }
+			    
+			   
+			
 			});
 			editalert.show();
 

@@ -1,6 +1,7 @@
 package com.example.todolistdb;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -40,6 +41,8 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 	ArrayList<String> 	values 			= new ArrayList<String>();
 	ArrayList<String> 	comment 		= new ArrayList<String>();
 	ArrayList<Integer> 	spinnerposition = new ArrayList<Integer>();
+	
+	List<ToDo> todoList;
 
 	// Um beim start der activity dem benutzer ein beispiel zu zeigen
 	String 	beispiel_titel 			= "Neuer Eintrag";
@@ -77,6 +80,16 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 		// List View und Adapter Initialisierung
 		todoListView = (ListView) findViewById(R.id.listView_todoList);
 
+		List <Priority> p = getHelper().getAllPriorities();
+		getHelper().createToDo("Test", "Nix", p.get(0) , new Date().getTime());
+		
+
+		
+		todoList = getHelper().getAllToDos();
+		
+		for(ToDo t : todoList)
+			values.add(t.getTitle());
+		
 		arrayAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, values);
 		todoListView.setAdapter(arrayAdapter);
@@ -87,7 +100,6 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 
 		
 		
-
 		// loadSavedPreferences();
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -109,7 +121,6 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 		alert = builder.create();
 		
 		
-		//setUpDatabase();
 	}
 	
 	@Override
@@ -152,23 +163,25 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-
-			// Positionen von titel und beschreibung
-			String s = values.get(position);
-			positionString = position;
-
-			String c = comment.get(position);
-			commentPostionString = position;
-
-			int a = spinnerposition.get(position);
-			spinnerPosition = position;
+			
+			ToDo todo = todoList.get(position-1);
+//			// Positionen von titel und beschreibung
+//			String s = values.get(position);
+//			positionString = position;
+//
+//			String c = comment.get(position);
+//			commentPostionString = position;
+//
+//			int a = spinnerposition.get(position);
+//			spinnerPosition = position;
 
 			// Detail_main wird mit den Daten des Items aufgerufen
 			Intent intent = new Intent(ToDoList_main.this, Detail_main.class);
-			intent.putExtra(DATA_TITEL, s);
-			intent.putExtra(DATA_COMMENT, c);
-			intent.putExtra(DATA_SPINNER, a);
-			intent.putExtra(DATA_DELETE, false);
+//			intent.putExtra(DATA_TITEL, s);
+//			intent.putExtra(DATA_COMMENT, c);
+//			intent.putExtra(DATA_SPINNER, a);
+//			intent.putExtra(DATA_DELETE, false);
+			intent.putExtra("ToDo", todo);
 			startActivityForResult(intent, REQUEST_CODE_DETAIL_MAIN);
 		}
 	};
@@ -274,6 +287,8 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 				values.add(data.getExtras().getString("edit_titel"));
 				comment.add(data.getExtras().getString("edit_beschreibung"));
 				spinnerposition.add(data.getExtras().getInt("spinner"));
+				
+				
 
 				arrayAdapter = new ArrayAdapter<String>(this,
 						android.R.layout.simple_list_item_1, values);
@@ -325,26 +340,5 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 		}
 	}
 
-	private void setUpDatabase()
-	{
-		getHelper().createCategory("A");
-		getHelper().createCategory("B");
-		getHelper().createCategory("C");
-		List<Category> cats = getHelper().getAllCategories();
-		getHelper().createPriority("high");
-		getHelper().createPriority("medium");
-		getHelper().createPriority("low");
-		List<Priority> prios = getHelper().getAllPriorities();
-		getHelper().createToDo("Arzt", "Zahnarzt", prios.get(2), 10000);
-		getHelper().createToDo("Snakes", "California Mountainsnakes", prios.get(0), 20000);
-		getHelper().createToDo("Uni", "Vorlesung", prios.get(1), 30000);
-		List<ToDo> todos = getHelper().getAllToDos();
-		getHelper().createToDo_Category(todos.get(0), cats.get(0));
-		getHelper().createToDo_Category(todos.get(1), cats.get(0));
-		getHelper().createToDo_Category(todos.get(1), cats.get(1));
-		getHelper().createToDo_Category(todos.get(1), cats.get(2));
-		getHelper().createToDo_Category(todos.get(2), cats.get(2));
-		todos = getHelper().getAllToDos();
-		System.out.println(todos);
-	}
+	
 }

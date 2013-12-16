@@ -26,8 +26,6 @@
     <string name="addPriorities">Hinzufügen</string>
     <string name="priorities">Prioritäten</string>
     <string name="priority">Priorität</string>
-    
-    
 
     <string-array name="array_priority">
         <item>mittel</item>
@@ -41,5 +39,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_category_manage">CategoryManage</string>
     <string name="title_activity_priority_manager">PriorityManager</string>
+    <string name="title_activity_to_do__category__manager">ToDo_Category_Manager</string>
 
 </resources>

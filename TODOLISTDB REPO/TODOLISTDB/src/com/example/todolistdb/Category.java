@@ -7,6 +7,8 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName="category")
 public class Category
 {
+	public static final String CATEGORY_NAME_FIELD = "name";
+	
 	@DatabaseField(generatedId=true)
 	private int id;
 	@DatabaseField

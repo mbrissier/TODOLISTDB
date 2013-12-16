@@ -24,24 +24,28 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 
-public class CategoryManager extends OrmLiteBaseActivity<MyHelper> {
+public class ToDo_Category_Manager extends OrmLiteBaseActivity<MyHelper> {
  
-	ListView categoryList;
-	ArrayList<String> categoryArray = new ArrayList<String>();
 	
-	private ArrayAdapter<String> arrayAdapter;
 	
-	private List<Category> categories;
-
 	
+	private ArrayAdapter<String> 		arrayAdapter;
+	
+	private List<Category>				categories;
+	private Spinner 					prioritySpinner;
+	ListView 							categoryList;
+	private	ArrayList<String>			priorities = new ArrayList<String>();
+	ArrayList<String> 					categoryArray = new ArrayList<String>();
 
  @Override
  protected void onCreate(Bundle savedInstanceState) {
   super.onCreate(savedInstanceState);
-  setContentView(R.layout.activity_category_manager);
-
+  setContentView(R.layout.activity_to_do__category__manager);
+  
+  
   
   categoryList = (ListView) findViewById(R.id.listViewCategory);
   categoryList.setOnItemClickListener(categoryListListener);
@@ -112,7 +116,7 @@ public void createListView() {
  public boolean onCreateOptionsMenu(Menu menu) {
 
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.category_manage, menu);
+		inflater.inflate(R.menu.to_do__category__manager, menu);
 		return true;
 	}
  
@@ -122,7 +126,7 @@ public void createListView() {
 
 		switch (item.getItemId()) {
 
-		case R.id.addCategory:
+		case R.id.addCategoryToDo:
 			
 			final AlertDialog.Builder editalert = new AlertDialog.Builder(this);
 
@@ -136,7 +140,18 @@ public void createListView() {
 			input.setLayoutParams(lp);
 			editalert.setView(input);
 			
-			editalert.setPositiveButton(getResources().getString(R.string.addCategory), new DialogInterface.OnClickListener() {
+			prioritySpinner= (Spinner) findViewById(R.id.spinner_priority_todo_category);
+			  
+			  List<Priority> priorityList = getHelper().getAllPriorities();
+				
+				for(Priority p : priorityList)
+					priorities.add(p.getName());
+				
+			  ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, priorities);
+			  prioritySpinner.setAdapter(adapter);
+			  editalert.setView(prioritySpinner);
+			  prioritySpinner.performClick();
+			  editalert.setPositiveButton(getResources().getString(R.string.addCategory), new DialogInterface.OnClickListener() {
 			    public void onClick(DialogInterface dialog, int whichButton) {
 			    	
 			    	if(!input.getText().toString().equals("")){
@@ -162,4 +177,3 @@ public void createListView() {
 	}
 
 }
-

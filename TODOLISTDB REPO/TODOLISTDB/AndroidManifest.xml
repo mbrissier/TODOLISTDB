@@ -46,6 +46,10 @@
             android:name="com.example.todolistdb.PriorityManager"
             android:label="@string/title_activity_priority_manager" >
         </activity>
+        <activity
+            android:name="com.example.todolistdb.ToDo_Category_Manager"
+            android:label="@string/title_activity_to_do__category__manager" >
+        </activity>
     </application>
 
 </manifest>

@@ -11,15 +11,18 @@ import com.example.todolistdb.exception.UserIQToLowException;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.ColumnArg;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 public class MyHelper extends OrmLiteSqliteOpenHelper
 {
-	private static final String DATABASE_NAME 		= "todo_database.db";
-	private static final int	DATABASE_VERSION 	= 1;
-	private static final String DATABASE_ACTION_TAG = "Databaseaction";
+	private static final String DATABASE_NAME 			= "todo_database.db";
+	private static final int	DATABASE_VERSION 		= 1;
+	private static final String DATABASE_ACTION_TAG 	= "Databaseaction";
+	private static final String CANTDELETENONEXISTENT	= "can't delete non existent item in database";
+	private static final String TOMANYARGUMENTS			= "to many arguments as result from query";
 	
 	
 	//dao's for every table
@@ -192,6 +195,59 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 			}
 		}
 		return todos;
+	}
+	
+	public void deleteCategory(String name){
+		if(categoryRuntimeDao == null)
+			getCategoryDao();
+		QueryBuilder<Category, Integer> catQb = categoryRuntimeDao.queryBuilder();
+		try {
+			catQb.where().eq(Category.CATEGORY_NAME_FIELD, name);
+			List<Category> categories = catQb.query();
+			if(categories.isEmpty()) throw new UserIQToLowException(CANTDELETENONEXISTENT);
+			if(categories.size() != 1) throw new UserIQToLowException(TOMANYARGUMENTS);
+			Category category = categories.get(0);
+			categoryRuntimeDao.delete(category);
+			Log.v(DATABASE_ACTION_TAG, "category deleted: " + category.getName());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void deletePriority(String name){
+		if(priorityRuntimeDao == null)
+			getPriorityDao();
+		QueryBuilder<Priority, Integer> catQb = priorityRuntimeDao.queryBuilder();
+		try {
+			catQb.where().eq(Priority.PRIORITY_NAME_FIELD, name);
+			List<Priority> priorities = catQb.query();
+			if(priorities.isEmpty()) throw new UserIQToLowException(CANTDELETENONEXISTENT);
+			if(priorities.size() != 1) throw new UserIQToLowException(TOMANYARGUMENTS);
+			Priority priority = priorities.get(0);
+			priorityRuntimeDao.delete(priority);
+		priorityRuntimeDao.delete(priority);
+		Log.v(DATABASE_ACTION_TAG, "priority deleted: " + priority.getName());
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteToDo_Category(ToDo_Category toDo_Category){
+		if(toDoCategoryRuntimeDao == null)
+			getToDo_CategoryDao();
+		toDoCategoryRuntimeDao.delete(toDo_Category);
+		Log.v(DATABASE_ACTION_TAG, "todo_category deleted: todo: " + toDo_Category.getTodo_id() + " category: " + toDo_Category.getCategory_id());
+	}
+	
+	public void deleteToDo(ToDo toDo){
+		if(toDoRuntimeDao == null)
+			getToDoDao();
+		toDoRuntimeDao.delete(toDo);
+		Log.v(DATABASE_ACTION_TAG, "todo deleted: " + toDo.getTitle());
 	}
 	
 	@Override
