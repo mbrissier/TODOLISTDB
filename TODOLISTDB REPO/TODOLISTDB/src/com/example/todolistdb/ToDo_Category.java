@@ -6,6 +6,9 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable (tableName="todo_category")
 public class ToDo_Category
 {
+	public static final String TODO_ID_FIELD = "todo_id";
+	public static final String CATEGORY_ID_FIELD = "category_id";
+	
 	@DatabaseField(uniqueCombo=true, foreign=true)
 	private ToDo todo_id;
 	@DatabaseField(uniqueCombo=true, foreign=true)

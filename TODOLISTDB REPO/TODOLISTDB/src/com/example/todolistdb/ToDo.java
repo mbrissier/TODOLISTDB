@@ -9,9 +9,8 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName="todo")
 public class ToDo implements Serializable
 {
-	/**
-	 * 
-	 */
+	public static final String TODO_ID_FIELD = "id";
+	
 	private static final long serialVersionUID = 90311570164858987L;
 	@DatabaseField(generatedId=true)
 	private int id;
