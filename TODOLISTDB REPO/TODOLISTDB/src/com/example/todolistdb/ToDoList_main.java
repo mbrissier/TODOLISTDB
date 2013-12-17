@@ -3,10 +3,8 @@ package com.example.todolistdb;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
-import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import android.os.Bundle;
 import android.app.AlertDialog;

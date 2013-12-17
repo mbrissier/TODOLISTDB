@@ -8,10 +8,9 @@ import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
 
 
 
-import android.app.Activity;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -120,7 +119,7 @@ public void createListView() {
 		return true;
 	}
  
- 
+
  @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -134,6 +133,7 @@ public void createListView() {
 
 
 			final EditText input = new EditText(this);
+			@SuppressWarnings("deprecation")
 			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 			        LinearLayout.LayoutParams.FILL_PARENT,
 			        LinearLayout.LayoutParams.FILL_PARENT);

@@ -11,7 +11,6 @@ import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -27,7 +26,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 public class Detail_main extends OrmLiteBaseActivity<MyHelper> implements OnItemSelectedListener {
@@ -96,6 +94,7 @@ public class Detail_main extends OrmLiteBaseActivity<MyHelper> implements OnItem
 
 			titel.setText(todo.getTitle());
 			beschreibung.setText(todo.getDescription());
+			@SuppressWarnings("unchecked")
 			ArrayAdapter<String> adap = (ArrayAdapter<String>) prioritySpinner.getAdapter();
 			int index = -1;
 			for(int i = 0; i < adap.getCount(); i++)
