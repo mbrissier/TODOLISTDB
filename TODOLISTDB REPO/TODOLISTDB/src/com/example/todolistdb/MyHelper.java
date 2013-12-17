@@ -291,10 +291,53 @@ public class MyHelper extends OrmLiteSqliteOpenHelper
 		}
 	}
 	
+	public void updateToDo(ToDo todo)
+	{
+		if(toDoRuntimeDao == null)
+			getToDoDao();
+		toDoRuntimeDao.update(todo);
+		Log.v(DATABASE_ACTION_TAG, "updated ToDo: " + todo.getId());
+		
+	}
+	
+	public void updateCategory(Category cat)
+	{
+		if(categoryRuntimeDao == null)
+			getCategoryDao();
+		categoryRuntimeDao.update(cat);
+		Log.v(DATABASE_ACTION_TAG, "updated Category: " + cat.getName());
+		
+	}
+	
+	public void getCategories(ToDo todo)
+	{
+		if(toDoRuntimeDao == null)
+			getToDoDao();
+		if(toDoCategoryRuntimeDao == null)
+			getToDo_CategoryDao();
+		if(categoryRuntimeDao == null)
+			getCategoryDao();
+		QueryBuilder<ToDo, Integer> tdQb = toDoRuntimeDao.queryBuilder();
+		try {
+			tdQb.where().eq(ToDo.TODO_ID_FIELD, todo.getId());
+			QueryBuilder<ToDo_Category, Integer> tdcQb = toDoCategoryRuntimeDao.queryBuilder();
+			tdcQb.join(tdQb);
+			QueryBuilder<Category, Integer> catQb = categoryRuntimeDao.queryBuilder();
+			todo.setCategories(catQb.join(tdcQb).query());
+			tdQb = toDoRuntimeDao.queryBuilder();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public void close()
 	{
 		super.close();
 		toDoRuntimeDao = null;
+		toDoCategoryRuntimeDao	= null;
+		categoryRuntimeDao		= null;
+		priorityRuntimeDao 		= null;
 	}
 }
