@@ -39,10 +39,10 @@ public class ToDoContentProvider extends ContentProvider {
 		public static final Uri 	CONTENT_URI = Uri.parse(SCHEME + AUTHORITY + "/" + PATH);
 		//column names
 		public static final String	TITLE 		= ToDo.TODO_TITLE_FIELD;
-		public static final String	DATE 		= ToDo.TODO_DATE_FIELD;
+		public static final String	DATE 		= "datetime";
 		public static final String	DESCRIPTION	= ToDo.TODO_DESCRIPTION_FIELD;
-		public static final String	ID	 		= ToDo.TODO_ID_FIELD;
-		public static final String	PRIORITY	= ToDo.TODO_PRIORITY_FIELD;
+		public static final String	ID	 		= "_id";
+		public static final String	PRIORITY	= "prioriy_id";
 		//MIME types
 		public static final String CONTENT_TYPE 		= "vnd.android.cursor.dir/vnd.de.htwds.mada.todo";
 		public static final String CONTENT_ITEM_TYPE 	= "vnd.android.cursor.item/vnd.de.htwds.mada.todo";
@@ -54,7 +54,7 @@ public class ToDoContentProvider extends ContentProvider {
 		public static final Uri 	CONTENT_URI = Uri.parse(SCHEME + AUTHORITY + "/" + PATH);
 		//column names
 		public static final String	NAME 		= Priority.PRIORITY_NAME_FIELD;
-		public static final String	ID	 		= Priority.PRIORITY_ID_FIELD;
+		public static final String	ID	 		= "_id";
 		//MIME types
 		public static final String CONTENT_TYPE 		= "vnd.android.cursor.dir/vnd.de.htwds.mada.priority";
 		public static final String CONTENT_ITEM_TYPE 	= "vnd.android.cursor.item/vnd.de.htwds.mada.priority";
