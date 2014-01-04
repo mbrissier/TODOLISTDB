@@ -10,6 +10,10 @@ import com.j256.ormlite.table.DatabaseTable;
 public class ToDo implements Serializable
 {
 	public static final String TODO_ID_FIELD = "id";
+	public static final String TODO_DATE_FIELD = "date";
+	public static final String TODO_TITLE_FIELD = "title";
+	public static final String TODO_DESCRIPTION_FIELD = "description";
+	public static final String TODO_PRIORITY_FIELD = "priority";
 	
 	private static final long serialVersionUID = 90311570164858987L;
 	@DatabaseField(generatedId=true)

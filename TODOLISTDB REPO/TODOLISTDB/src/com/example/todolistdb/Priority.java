@@ -15,7 +15,8 @@ public class Priority implements Serializable
 	private static final long serialVersionUID = -6923180940189458781L;
 
 
-	public static final String PRIORITY_NAME_FIELD = "name";
+	public static final String PRIORITY_NAME_FIELD 	= "name";
+	public static final String PRIORITY_ID_FIELD 	= "id";
 	
 	
 	@DatabaseField(generatedId=true)

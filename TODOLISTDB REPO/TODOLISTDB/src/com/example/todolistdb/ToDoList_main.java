@@ -95,6 +95,8 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 		todoListView.setLongClickable(true);
 
 		todoListView.setOnItemLongClickListener(todoListViewLongListener);
+		
+
 
 		
 		
@@ -163,22 +165,8 @@ public class ToDoList_main extends OrmLiteBaseActivity<MyHelper> {
 				long id) {
 			
 			ToDo todo = todoList.get(position-1);
-//			// Positionen von titel und beschreibung
-//			String s = values.get(position);
-//			positionString = position;
-//
-//			String c = comment.get(position);
-//			commentPostionString = position;
-//
-//			int a = spinnerposition.get(position);
-//			spinnerPosition = position;
 
-			// Detail_main wird mit den Daten des Items aufgerufen
 			Intent intent = new Intent(ToDoList_main.this, Detail_main.class);
-//			intent.putExtra(DATA_TITEL, s);
-//			intent.putExtra(DATA_COMMENT, c);
-//			intent.putExtra(DATA_SPINNER, a);
-//			intent.putExtra(DATA_DELETE, false);
 			intent.putExtra("ToDo", todo);
 			startActivityForResult(intent, REQUEST_CODE_DETAIL_MAIN);
 		}
