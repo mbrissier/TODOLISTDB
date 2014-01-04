@@ -12,9 +12,11 @@ import android.util.Log;
 
 public class ToDoContentProvider extends ContentProvider {
 	
+	//defining general URI-elements
 	public static final String SCHEME		= "content://";
 	public static final String AUTHORITY 	= "de.htwds.mada.todo";
 	
+	//defining constants for the matcher and the logging
 	private static final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
 	private static final int		TODO	= 100;
 	private static final int		TODO_ID	= 101;
@@ -41,7 +43,7 @@ public class ToDoContentProvider extends ContentProvider {
 		public static final String	DESCRIPTION	= ToDo.TODO_DESCRIPTION_FIELD;
 		public static final String	ID	 		= ToDo.TODO_ID_FIELD;
 		public static final String	PRIORITY	= ToDo.TODO_PRIORITY_FIELD;
-		
+		//MIME types
 		public static final String CONTENT_TYPE 		= "vnd.android.cursor.dir/vnd.de.htwds.mada.todo";
 		public static final String CONTENT_ITEM_TYPE 	= "vnd.android.cursor.item/vnd.de.htwds.mada.todo";
 	}
@@ -53,7 +55,7 @@ public class ToDoContentProvider extends ContentProvider {
 		//column names
 		public static final String	NAME 		= Priority.PRIORITY_NAME_FIELD;
 		public static final String	ID	 		= Priority.PRIORITY_ID_FIELD;
-		
+		//MIME types
 		public static final String CONTENT_TYPE 		= "vnd.android.cursor.dir/vnd.de.htwds.mada.priority";
 		public static final String CONTENT_ITEM_TYPE 	= "vnd.android.cursor.item/vnd.de.htwds.mada.priority";
 	}
@@ -100,6 +102,7 @@ public class ToDoContentProvider extends ContentProvider {
 
 	@Override
 	public boolean onCreate() {
+		//initializing helper
 		helper = new MyHelper(getContext());
 		return true;
 	}
@@ -109,6 +112,7 @@ public class ToDoContentProvider extends ContentProvider {
 			String[] selectionArgs, String sortOrder) {
 		int code = matcher.match(uri);
 		
+		//deciding which query-method to call
 		switch(code) {
 			case TODO:
 				return queryAllTodos(projection, selection, selectionArgs, sortOrder);
@@ -126,6 +130,7 @@ public class ToDoContentProvider extends ContentProvider {
 		
 	}
 
+	//query for single priority
 	private Cursor queryPriority(long prioId, String[] projection,
 			String selection, String[] selectionArgs, String sortOrder) {
 		Cursor 			cursor 	= null;
@@ -144,6 +149,7 @@ public class ToDoContentProvider extends ContentProvider {
 		return cursor;
 	}
 
+	//query for all priorities
 	private Cursor queryAllPriorities(String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		Cursor 			cursor 	= null;
@@ -158,6 +164,7 @@ public class ToDoContentProvider extends ContentProvider {
 		return cursor;
 	}
 
+	//query for todo
 	private Cursor queryTodo(long todoId, String[] projection,
 			String selection, String[] selectionArgs, String sortOrder) {
 		Cursor 			cursor 	= null;
@@ -176,6 +183,7 @@ public class ToDoContentProvider extends ContentProvider {
 		return cursor;
 	}
 
+	//query for all todos
 	private Cursor queryAllTodos(String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		Cursor 			cursor 	= null;
