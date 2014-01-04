@@ -9,6 +9,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName="todo")
 public class ToDo implements Serializable
 {
+	public static final String TABLE_NAME = "todo";
 	public static final String TODO_ID_FIELD = "id";
 	public static final String TODO_DATE_FIELD = "date";
 	public static final String TODO_TITLE_FIELD = "title";
