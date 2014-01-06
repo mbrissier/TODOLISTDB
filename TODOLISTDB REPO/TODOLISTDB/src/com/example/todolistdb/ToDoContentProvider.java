@@ -35,7 +35,7 @@ public class ToDoContentProvider extends ContentProvider {
 	
 	public static final class ContractToDo implements BaseColumns {
 		//defining URI
-		public static final String 	PATH 		= "todo";
+		public static final String 	PATH 		= "todos";
 		public static final Uri 	CONTENT_URI = Uri.parse(SCHEME + AUTHORITY + "/" + PATH);
 		//column names
 		public static final String	TITLE 		= ToDo.TODO_TITLE_FIELD;
@@ -50,7 +50,7 @@ public class ToDoContentProvider extends ContentProvider {
 	
 	public static final class ContractPriority implements BaseColumns {
 		//defining URI
-		public static final String 	PATH 		= "priority";
+		public static final String 	PATH 		= "priorities";
 		public static final Uri 	CONTENT_URI = Uri.parse(SCHEME + AUTHORITY + "/" + PATH);
 		//column names
 		public static final String	NAME 		= Priority.PRIORITY_NAME_FIELD;
